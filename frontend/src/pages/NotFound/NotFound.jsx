@@ -10,7 +10,7 @@ export default function NotFound() {
         <p className="not-found__desc">
           This page doesn't exist. Head back to the home page.
         </p>
-        <Link to="/" className="not-found__link">
+        <Link to="/" className="btn btn--primary not-found__btn">
           ← Back to home
         </Link>
       </div>
