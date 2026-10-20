@@ -1,0 +1,524 @@
+/* ─── CreateTest — Page Styles ──────────────────────────────────────────────────
+   All colours reference tokens from tokens.css.
+   Prefix: .ct__ (short for CreateTest — avoids any global collisions)
+
+   Sections:
+     1.  Page container
+     2.  Page header
+     3.  Main card
+     4.  Method selector (tab row)
+     5.  Input panels (shared)
+     6.  Textarea
+     7.  URL input
+     8.  Input footer (hint, error, char counter)
+     9.  Example format block
+     10. Public-link notice
+     11. Generate button
+     12. What Happens Next
+     13. Animations
+     14. Responsive
+────────────────────────────────────────────────────────────────────────────── */
+
+
+/* ── 1. Page container ─────────────────────────────────────────────────────── */
+
+.ct {
+  max-width: 680px;
+  margin-inline: auto;
+  padding: var(--space-12) var(--space-6) var(--space-20);
+}
+
+
+/* ── 2. Page header ────────────────────────────────────────────────────────── */
+
+.ct__header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.ct__title {
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.ct__subtitle {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+
+/* ── 3. Main card ──────────────────────────────────────────────────────────── */
+
+.ct__card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-8);
+  transition:
+    background-color var(--transition-slow),
+    border-color     var(--transition-slow);
+}
+
+
+/* ── 4. Method selector ────────────────────────────────────────────────────── */
+/*
+   Two buttons inside a pill-shaped track.
+   The active tab gets a white (surface) background with a subtle shadow,
+   giving a "lifted card inside a tray" appearance that works in both themes.
+*/
+
+.ct__method-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-1);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 4px;
+  margin-bottom: var(--space-7);
+  transition:
+    background-color var(--transition-slow),
+    border-color     var(--transition-slow);
+}
+
+.ct__method-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.ct__method-btn:hover {
+  color: var(--color-text);
+}
+
+.ct__method-btn--active {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  font-weight: var(--weight-semibold);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Prevent active-tab hover from dimming the active color */
+.ct__method-btn--active:hover {
+  color: var(--color-primary);
+}
+
+.ct__method-btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+
+/* ── 5. Input panels (shared) ──────────────────────────────────────────────── */
+
+.ct__input-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.ct__input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ct__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+
+/* ── 6. Textarea ───────────────────────────────────────────────────────────── */
+
+.ct__textarea {
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  line-height: var(--leading-relaxed);
+  transition:
+    border-color      var(--transition-base),
+    background-color  var(--transition-slow),
+    box-shadow        var(--transition-base);
+}
+
+.ct__textarea::placeholder {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+  line-height: var(--leading-relaxed);
+}
+
+.ct__textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* Error state — border only; ring uses error-tinted colour */
+.ct__textarea.ct__field--error {
+  border-color: var(--color-error);
+}
+
+.ct__textarea.ct__field--error:focus {
+  box-shadow: 0 0 0 3px var(--color-error-ring, rgba(220, 38, 38, 0.12));
+}
+
+[data-theme="dark"] .ct__textarea.ct__field--error:focus {
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15);
+}
+
+
+/* ── 7. URL input ──────────────────────────────────────────────────────────── */
+
+.ct__url-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* The icon sits inside the input's left side */
+.ct__url-icon {
+  position: absolute;
+  left: var(--space-4);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 1;
+  transition: color var(--transition-slow);
+}
+
+.ct__url-input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  /* Left padding accounts for the icon */
+  padding: var(--space-3) var(--space-4) var(--space-3) calc(var(--space-10) + 4px);
+  transition:
+    border-color      var(--transition-base),
+    background-color  var(--transition-slow),
+    box-shadow        var(--transition-base);
+}
+
+.ct__url-input::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.ct__url-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* Error state on URL wrapper */
+.ct__url-wrapper.ct__field--error .ct__url-input {
+  border-color: var(--color-error);
+}
+
+.ct__url-wrapper.ct__field--error .ct__url-input:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+[data-theme="dark"] .ct__url-wrapper.ct__field--error .ct__url-input:focus {
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15);
+}
+
+
+/* ── 8. Input footer (hint, error, char counter) ───────────────────────────── */
+
+.ct__input-footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.ct__hint {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+}
+
+.ct__error-msg {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-error);
+}
+
+.ct__char-counter {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  transition: color var(--transition-base);
+}
+
+.ct__char-counter--warn { color: var(--color-warning); }
+.ct__char-counter--over { color: var(--color-error); font-weight: var(--weight-semibold); }
+
+
+/* ── 9. Example format block ───────────────────────────────────────────────── */
+
+.ct__example-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ct__example-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-primary);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color var(--transition-base);
+  align-self: flex-start;
+}
+
+.ct__example-toggle:hover {
+  color: var(--color-primary-hover);
+}
+
+.ct__example-toggle:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.ct__example-block {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  transition:
+    background-color var(--transition-slow),
+    border-color     var(--transition-slow);
+}
+
+.ct__example-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.ct__example-code {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text);
+  line-height: var(--leading-relaxed);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  transition: border-color var(--transition-slow);
+}
+
+.ct__example-note {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+
+/* ── 10. Public-link notice ────────────────────────────────────────────────── */
+/*
+   A subdued informational box shown in link mode.
+   Uses primary-light as background to signal "info" without being alarming.
+   The icon is colour-matched to the primary accent.
+*/
+
+.ct__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background-color: var(--color-primary-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  transition:
+    background-color var(--transition-slow),
+    border-color     var(--transition-slow);
+}
+
+.ct__notice svg {
+  color: var(--color-primary);
+  margin-top: 1px;
+}
+
+.ct__notice strong {
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+}
+
+
+/* ── 11. Generate button ───────────────────────────────────────────────────── */
+
+.ct__generate-btn {
+  width: 100%;
+  margin-top: var(--space-8);
+  justify-content: center;
+}
+
+/* Disabled state — pointer-events still need to reach the button for UX */
+.ct__generate-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none;
+}
+
+/* Locks hover/active transforms during loading */
+.ct__generate-btn--loading {
+  pointer-events: none;
+}
+
+/* Spinner animation */
+@keyframes ct-spin {
+  to { transform: rotate(360deg); }
+}
+
+.ct__spinner {
+  animation: ct-spin 0.75s linear infinite;
+  flex-shrink: 0;
+}
+
+
+/* ── 12. What Happens Next ─────────────────────────────────────────────────── */
+/*
+   A light supplementary section below the card that shows the full workflow:
+   Extract → Review → Test → Results.
+   Keeps the user from wondering "what happens after I click Generate?"
+*/
+
+.ct__what-next {
+  padding-top: var(--space-2);
+}
+
+.ct__what-next-heading {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.ct__next-steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.ct__next-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+/* Numbered circle badge */
+.ct__next-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  flex-shrink: 0;
+  transition: background-color var(--transition-slow);
+}
+
+.ct__next-title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.ct__next-desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+
+/* ── 14. Responsive ────────────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .ct {
+    padding: var(--space-8) var(--space-4) var(--space-12);
+  }
+
+  .ct__card {
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+  }
+
+  .ct__title {
+    font-size: var(--text-3xl);
+  }
+
+  .ct__method-btn {
+    font-size: var(--text-xs);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .ct__textarea {
+    min-height: 180px;
+  }
+}

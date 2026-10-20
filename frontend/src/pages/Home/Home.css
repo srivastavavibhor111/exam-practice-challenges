@@ -1,0 +1,538 @@
+/* ─── Home — Landing Page Styles ──────────────────────────────────────────────
+   All colors reference tokens from tokens.css via CSS custom properties.
+   No hard-coded color values. Both light and dark themes work automatically.
+
+   Structure:
+     1. Section utilities  (.section-header, .section-eyebrow, .section-heading)
+     2. Hero
+     3. Hero Visual Mockup
+     4. How It Works
+     5. Why Different
+     6. CTA Banner
+     7. Responsive overrides
+────────────────────────────────────────────────────────────────────────────── */
+
+
+/* ─── 1. Section Utilities ────────────────────────────────────────────────── */
+/* These are used by How It Works, Why Different, and potentially future pages. */
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.section-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+
+.section-heading {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+
+/* ─── 2. Hero ─────────────────────────────────────────────────────────────── */
+
+.hero {
+  padding-block: var(--space-20) var(--space-24);
+}
+
+.hero__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+}
+
+.hero__text {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Eyebrow badge */
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-6);
+}
+
+.hero__eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* Headline */
+.hero__headline {
+  font-size: var(--text-5xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  margin-bottom: var(--space-6);
+}
+
+/* Body copy */
+.hero__body {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-8);
+  max-width: 480px;
+}
+
+/* CTA row */
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-10);
+}
+
+.hero__scroll-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  transition: color var(--transition-base);
+}
+
+.hero__scroll-link:hover {
+  color: var(--color-text);
+}
+
+/* Proof strip — three mini stats below the CTA */
+.hero__proof {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+
+.hero__proof-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hero__proof-title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+.hero__proof-sub {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.hero__proof-divider {
+  width: 1px;
+  height: 32px;
+  background-color: var(--color-border);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* Visual column */
+.hero__visual {
+  flex: 0 0 400px;
+  max-width: 400px;
+}
+
+
+/* ─── 3. Hero Visual Mockup ───────────────────────────────────────────────── */
+
+.mockup-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-lg);
+}
+
+.mockup-label {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+/* Raw pasted text panel */
+.mockup-raw-text {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.mockup-raw-line {
+  display: block;
+}
+
+.mockup-raw-gap {
+  margin-top: var(--space-2);
+}
+
+.mockup-raw-answer {
+  color: var(--color-primary);
+  font-weight: var(--weight-medium);
+}
+
+/* Arrow between panels */
+.mockup-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+  color: var(--color-primary);
+}
+
+.mockup-arrow-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+  font-family: var(--font-body);
+}
+
+/* Clean question card output */
+.mockup-question-card {
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.mockup-q-meta {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.mockup-q-text {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-4);
+}
+
+.mockup-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.mockup-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+}
+
+.mockup-option--selected {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.mockup-option__radio {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mockup-option__radio--checked {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+}
+
+.mockup-option__radio-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: #ffffff;
+}
+
+.mockup-option__text {
+  font-size: var(--text-xs);
+  color: var(--color-text);
+}
+
+.mockup-option--selected .mockup-option__text {
+  color: var(--color-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.mockup-option__letter {
+  color: var(--color-text-muted);
+  margin-right: var(--space-2);
+  font-weight: var(--weight-medium);
+}
+
+
+/* ─── 4. How It Works ─────────────────────────────────────────────────────── */
+
+.how-it-works {
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-20);
+  transition:
+    background-color var(--transition-slow),
+    border-color var(--transition-slow);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.step-card {
+  position: relative;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base),
+    background-color var(--transition-slow),
+    border-color var(--transition-slow);
+}
+
+.step-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.step-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  margin-bottom: var(--space-5);
+  transition: background-color var(--transition-slow);
+}
+
+/* Large ghost step number — decorative */
+.step-card__num {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-6);
+  font-family: var(--font-heading);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-border-strong);
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+  pointer-events: none;
+  transition: color var(--transition-slow);
+}
+
+.step-card__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.step-card__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+
+/* ─── 5. Why Different ────────────────────────────────────────────────────── */
+
+.why-different {
+  padding-block: var(--space-20);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.feature-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base),
+    background-color var(--transition-slow),
+    border-color var(--transition-slow);
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.feature-card__emoji {
+  display: block;
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: var(--space-5);
+}
+
+.feature-card__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-3);
+}
+
+.feature-card__body {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+
+/* ─── 6. CTA Banner ───────────────────────────────────────────────────────── */
+
+.cta-banner {
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding-block: var(--space-20);
+  transition:
+    background-color var(--transition-slow),
+    border-color var(--transition-slow);
+}
+
+.cta-banner__inner {
+  text-align: center;
+}
+
+.cta-banner__heading {
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.cta-banner__body {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-8);
+}
+
+
+/* ─── 7. Responsive ───────────────────────────────────────────────────────── */
+
+/* Hide visual mockup on tablets and below — layout would break */
+@media (max-width: 960px) {
+  .hero__inner {
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .hero__visual {
+    display: none;
+  }
+
+  .hero__body {
+    max-width: none;
+  }
+}
+
+/* Mobile: tighten spacing, collapse grids to 1 column */
+@media (max-width: 768px) {
+  .hero {
+    padding-block: var(--space-12);
+  }
+
+  .hero__headline {
+    font-size: var(--text-4xl);
+  }
+
+  .steps-grid,
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .how-it-works,
+  .why-different,
+  .cta-banner {
+    padding-block: var(--space-16);
+  }
+
+  .cta-banner__heading {
+    font-size: var(--text-3xl);
+  }
+
+  /* Hide the dividers in the proof strip on small screens */
+  .hero__proof-divider {
+    display: none;
+  }
+}
+
+/* Extra small: stack CTA row and reduce headline further */
+@media (max-width: 480px) {
+  .hero__headline {
+    font-size: var(--text-3xl);
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

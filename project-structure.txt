@@ -1,0 +1,245 @@
+|-- backend
+|   |-- config
+|   |   |-- db.js
+|   |-- controllers
+|   |   |-- analyticsController.js
+|   |   |-- attemptController.js
+|   |   |-- authController.js
+|   |   |-- extractionController.js
+|   |   |-- folderController.js
+|   |   |-- googleAuthController.js
+|   |   |-- questionController.js
+|   |   |-- sharedAttemptController.js
+|   |   |-- sharedTestController.js
+|   |   |-- sourceController.js
+|   |   |-- testController.js
+|   |   |-- userController.js
+|   |-- middleware
+|   |   |-- auth.js
+|   |   |-- errorHandler.js
+|   |   |-- protectPendingGoogle.js
+|   |   |-- rateLimiters.js
+|   |   |-- sanitize.js
+|   |   |-- validation.js
+|   |   |-- verifyRecaptcha.js
+|   |-- models
+|   |   |-- Attempt.js
+|   |   |-- Folder.js
+|   |   |-- FolderItem.js
+|   |   |-- index.js
+|   |   |-- Question.js
+|   |   |-- SharedAttempt.js
+|   |   |-- SharedTest.js
+|   |   |-- SharedTestBookmark.js
+|   |   |-- Source.js
+|   |   |-- Test.js
+|   |   |-- User.js
+|   |-- routes
+|   |   |-- analyticsRoutes.js
+|   |   |-- attemptRoutes.js
+|   |   |-- authRoutes.js
+|   |   |-- extractionRoutes.js
+|   |   |-- folderRoutes.js
+|   |   |-- index.js
+|   |   |-- questionRoutes.js
+|   |   |-- sharedAttemptRoutes.js
+|   |   |-- sharedTestRoutes.js
+|   |   |-- sourceRoutes.js
+|   |   |-- testRoutes.js
+|   |   |-- userRoutes.js
+|   |-- services
+|   |   |-- aiClient.js
+|   |   |-- aiExtractionService.js
+|   |   |-- attemptService.js
+|   |   |-- authService.js
+|   |   |-- explanationService.js
+|   |   |-- extractionService.js
+|   |   |-- extractionValidationService.js
+|   |   |-- folderService.js
+|   |   |-- googleAuthService.js
+|   |   |-- insightsService.js
+|   |   |-- linkRetrievalService.js
+|   |   |-- questionService.js
+|   |   |-- recaptchaService.js
+|   |   |-- scoringService.js
+|   |   |-- sharedTestService.js
+|   |   |-- sourceService.js
+|   |   |-- testService.js
+|   |   |-- userService.js
+|   |-- tests
+|   |   |-- extractionValidationService.test.js
+|   |   |-- folderValidation.test.js
+|   |   |-- scoringService.test.js
+|   |   |-- validation.test.js
+|   |-- utils
+|   |   |-- AppError.js
+|   |   |-- assertOwnership.js
+|   |   |-- asyncHandler.js
+|   |   |-- dateGrouping.js
+|   |   |-- encryption.js
+|   |   |-- folderValidation.js
+|   |   |-- sharedTestId.js
+|   |-- .env
+|   |-- env.example
+|   |-- package.json
+|   |-- package-lock.json
+|   |-- server.js
+|-- frontend
+|   |-- src
+|   |   |-- components
+|   |   |   |-- BackToTop
+|   |   |   |   |-- BackToTop.css
+|   |   |   |   |-- BackToTop.jsx
+|   |   |   |-- Footer
+|   |   |   |   |-- Footer.css
+|   |   |   |   |-- Footer.jsx
+|   |   |   |-- GoogleAuthButton
+|   |   |   |   |-- GoogleAuthButton.css
+|   |   |   |   |-- GoogleAuthButton.jsx
+|   |   |   |-- Navbar
+|   |   |   |   |-- Navbar.css
+|   |   |   |   |-- Navbar.jsx
+|   |   |   |-- PageLoadingFallback
+|   |   |   |   |-- PageLoadingFallback.css
+|   |   |   |   |-- PageLoadingFallback.jsx
+|   |   |   |-- Progress
+|   |   |   |   |-- AnalyticsControls.css
+|   |   |   |   |-- AnalyticsControls.jsx
+|   |   |   |   |-- Charts.css
+|   |   |   |   |-- chartUtils.js
+|   |   |   |   |-- PerformanceTrendChart.jsx
+|   |   |   |   |-- ProgressSummaryCards.css
+|   |   |   |   |-- ProgressSummaryCards.jsx
+|   |   |   |   |-- TestComparisonChart.jsx
+|   |   |   |-- ProtectedRoute
+|   |   |   |   |-- ProtectedRoute.jsx
+|   |   |   |-- QuestionOrderSelector
+|   |   |   |   |-- QuestionOrderSelector.css
+|   |   |   |   |-- QuestionOrderSelector.jsx
+|   |   |   |-- Recaptcha
+|   |   |   |   |-- Recaptcha.css
+|   |   |   |   |-- Recaptcha.jsx
+|   |   |   |-- ScreenshotPlaceholder
+|   |   |   |   |-- ScreenshotPlaceholder.css
+|   |   |   |   |-- ScreenshotPlaceholder.jsx
+|   |   |   |-- ThemeToggle
+|   |   |   |   |-- ThemeToggle.css
+|   |   |   |   |-- ThemeToggle.jsx
+|   |   |   |-- UserMenu
+|   |   |   |   |-- UserMenu.css
+|   |   |   |   |-- UserMenu.jsx
+|   |   |-- context
+|   |   |   |-- AuthContext.jsx
+|   |   |   |-- ThemeContext.jsx
+|   |   |-- hooks
+|   |   |   |-- useFocusTrap.js
+|   |   |   |-- useIsMobile.js
+|   |   |-- pages
+|   |   |   |-- Bookmarks
+|   |   |   |   |-- Bookmarks.css
+|   |   |   |   |-- Bookmarks.jsx
+|   |   |   |-- CreateTest
+|   |   |   |   |-- CreateTest.css
+|   |   |   |   |-- CreateTest.jsx
+|   |   |   |-- Dashboard
+|   |   |   |   |-- Dashboard.css
+|   |   |   |   |-- Dashboard.jsx
+|   |   |   |-- GeminiKeySetup
+|   |   |   |   |-- GeminiKeySetup.css
+|   |   |   |   |-- GeminiKeySetup.jsx
+|   |   |   |-- GetGeminiApiKeyGuide
+|   |   |   |   |-- 1.png
+|   |   |   |   |-- 2.png
+|   |   |   |   |-- 3.png
+|   |   |   |   |-- 4.png
+|   |   |   |   |-- 5.png
+|   |   |   |   |-- GetGeminiApiKeyGuide.css
+|   |   |   |   |-- GetGeminiApiKeyGuide.jsx
+|   |   |   |-- Home
+|   |   |   |   |-- Home.css
+|   |   |   |   |-- Home.jsx
+|   |   |   |-- Login
+|   |   |   |   |-- Login.css
+|   |   |   |   |-- Login.jsx
+|   |   |   |-- Mistakes
+|   |   |   |   |-- Mistakes.css
+|   |   |   |   |-- Mistakes.jsx
+|   |   |   |-- MyTests
+|   |   |   |   |-- FolderDialogs.jsx
+|   |   |   |   |-- FolderNotice.jsx
+|   |   |   |   |-- FolderSection.jsx
+|   |   |   |   |-- folderUtils.js
+|   |   |   |   |-- FolderView.jsx
+|   |   |   |   |-- LibraryTestCard.jsx
+|   |   |   |   |-- MyTests.css
+|   |   |   |   |-- MyTests.jsx
+|   |   |   |   |-- MyTestsFolders.css
+|   |   |   |-- NotFound
+|   |   |   |   |-- NotFound.css
+|   |   |   |   |-- NotFound.jsx
+|   |   |   |-- Profile
+|   |   |   |   |-- Profile.css
+|   |   |   |   |-- Profile.jsx
+|   |   |   |-- Progress
+|   |   |   |   |-- Progress.css
+|   |   |   |   |-- Progress.jsx
+|   |   |   |-- Register
+|   |   |   |   |-- Register.css
+|   |   |   |   |-- Register.jsx
+|   |   |   |-- Result
+|   |   |   |   |-- Result.css
+|   |   |   |   |-- Result.jsx
+|   |   |   |-- Review
+|   |   |   |   |-- Review.css
+|   |   |   |   |-- Review.jsx
+|   |   |   |-- ScoringRules
+|   |   |   |   |-- ScoringRules.css
+|   |   |   |   |-- ScoringRules.jsx
+|   |   |   |-- SharedTestResult
+|   |   |   |   |-- SharedTestResult.css
+|   |   |   |   |-- SharedTestResult.jsx
+|   |   |   |-- SharedTests
+|   |   |   |   |-- SharedTests.css
+|   |   |   |   |-- SharedTests.jsx
+|   |   |   |-- SharedTestTaking
+|   |   |   |   |-- SharedTestTaking.css
+|   |   |   |   |-- SharedTestTaking.jsx
+|   |   |   |-- Test
+|   |   |   |   |-- Test.css
+|   |   |   |   |-- Test.jsx
+|   |   |-- services
+|   |   |   |-- aiEnhancementsService.js
+|   |   |   |-- analyticsService.js
+|   |   |   |-- api.js
+|   |   |   |-- authService.js
+|   |   |   |-- dashboardService.js
+|   |   |   |-- extractionService.js
+|   |   |   |-- folderService.js
+|   |   |   |-- practiceService.js
+|   |   |   |-- resultService.js
+|   |   |   |-- sharedTestService.js
+|   |   |   |-- testService.js
+|   |   |   |-- testTakingService.js
+|   |   |-- styles
+|   |   |   |-- global.css
+|   |   |   |-- reset.css
+|   |   |   |-- tokens.css
+|   |   |-- utils
+|   |   |   |-- parser.js
+|   |   |   |-- questionOrder.js
+|   |   |   |-- scoring.js
+|   |   |   |-- validation.js
+|   |   |-- App.jsx
+|   |   |-- main.jsx
+|   |-- .env
+|   |-- env.example
+|   |-- index.html
+|   |-- package.json
+|   |-- package-lock.json
+|   |-- vite.config.js
+|-- download
+|-- package.json
+|-- package-lock.json
+|-- project-structure.txt
+|-- README.md
+

@@ -1,0 +1,732 @@
+/* ─── MyTestsFolders — Custom Test Folders styles ─────────────────────────────
+   Everything here is prefixed mtf- and is used only inside the My Tests page.
+   It builds on MyTests.css (the .mytests-card / .mytests-grid / .mytests-empty
+   classes are reused as-is) and uses ONLY the project's theme tokens, so both
+   light and dark mode work with no theme-specific rules.
+
+   The dialog look (.mtf-modal-*) mirrors the Profile page's delete-account
+   dialog, deliberately under its own class names: Dashboard.css and Profile.css
+   both define a global .dmodal-card with different rules, so reusing that name
+   here could change how those two modals look.
+────────────────────────────────────────────────────────────────────────────── */
+
+/* ── Accessibility helpers ── */
+
+.mtf-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mtf-tab:focus-visible,
+.mtf-icon-btn:focus-visible,
+.mtf-link-btn:focus-visible,
+.mtf-inline-link:focus-visible,
+.mtf-back-link:focus-visible,
+.mtf-folder-card__open:focus-visible,
+.mtf-notice__close:focus-visible,
+.mtf-input:focus-visible,
+.mtf-modal-btn:focus-visible,
+.btn.mtf-quiet:focus-visible,
+.mtf-pick-row:focus-within,
+.mtf-option:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ── Section tabs (Folders / Unorganized / All Tests) ── */
+
+.mtf-tabs {
+  display: flex;
+  gap: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-6);
+  overflow-x: auto;
+}
+
+.mtf-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: -1px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+
+.mtf-tab:hover {
+  color: var(--color-text);
+}
+
+/* Active tab: underline + heavier weight (not colour alone) + aria-current in the markup */
+.mtf-tab--active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.mtf-tab__count {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0 var(--space-2);
+  min-width: 22px;
+  text-align: center;
+}
+
+/* ── Notice banner ── */
+
+.mtf-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left-width: 4px;
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+}
+
+.mtf-notice--success { border-left-color: var(--color-success, #059669); }
+.mtf-notice--warning { border-left-color: var(--color-warning); }
+.mtf-notice--error   { border-left-color: var(--color-error); }
+
+.mtf-notice__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.mtf-notice--success .mtf-notice__icon { color: var(--color-success, #059669); }
+.mtf-notice--warning .mtf-notice__icon { color: var(--color-warning); }
+.mtf-notice--error   .mtf-notice__icon { color: var(--color-error); }
+
+.mtf-notice__text {
+  flex: 1;
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+.mtf-notice__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.mtf-notice__close:hover {
+  color: var(--color-text);
+}
+
+/* ── Folders section ── */
+
+.mtf-section-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+
+.mtf-section-note {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.mtf-folder-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-4);
+}
+
+.mtf-folder-card__open {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+}
+
+.mtf-folder-card__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.mtf-folder-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.mtf-folder-card__name {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  line-height: var(--leading-snug);
+  overflow-wrap: anywhere;
+}
+
+.mtf-folder-card__open:hover .mtf-folder-card__name {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.mtf-folder-card__count {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.mtf-folder-card__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+/* ── Inside an open folder ── */
+
+.mtf-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: var(--space-2);
+  border: none;
+  border-radius: var(--radius-md);
+
+  font: inherit;
+  font-weight: var(--weight-semibold);
+
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-size: inherit;
+}
+
+.mtf-back-link:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  color: var(--color-primary-text);
+}
+
+.mtf-folder-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-6); 
+  margin-bottom: var(--space-6);
+}
+
+.mtf-folder-title {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.mtf-folder-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* ── Test card additions (.mytests-card* classes come from MyTests.css) ── */
+
+.mtf-badges {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+}
+
+.mtf-badge {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2px var(--space-2);
+}
+
+/* "Needs attention" badges use a warning-coloured BORDER, but the label text
+   stays in the normal text colour so contrast holds in both themes. */
+.mtf-badge--attention {
+  color: var(--color-text);
+  border-color: var(--color-warning);
+}
+
+.mtf-card__attempts {
+  margin-top: var(--space-2);
+}
+
+.mtf-inline-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.mtf-muted-note {
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.mtf-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.mtf-icon-btn:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+/* ── Secondary ("quiet") buttons, used next to .btn--primary ── */
+
+.btn.mtf-quiet {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+    
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.btn.mtf-quiet:hover:not(:disabled) {
+  background-color: var(--color-surface);
+  border-color: var(--color-text-muted);
+}
+
+.btn.mtf-quiet:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn.mtf-quiet--danger {
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.btn.mtf-quiet--danger:hover:not(:disabled) {
+  border-color: var(--color-error);
+}
+
+/* ── Dialogs (look mirrors the Profile delete-account dialog) ── */
+
+.mtf-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: var(--space-4);
+  backdrop-filter: blur(2px);
+}
+
+.mtf-modal-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-7);
+  width: 100%;
+  max-width: 440px;
+  max-height: calc(100vh - (var(--space-4) * 2));
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.mtf-modal-card--lg {
+  max-width: 560px;
+}
+
+.mtf-modal-title {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.mtf-modal-body {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+.mtf-modal-body strong {
+  color: var(--color-text);
+}
+
+.mtf-modal-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.mtf-modal-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-error);
+}
+
+.mtf-modal-error svg {
+  margin-top: 2px;
+}
+
+.mtf-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: flex-end;
+  margin-top: var(--space-2);
+}
+
+.mtf-modal-actions--bordered {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+}
+
+.mtf-modal-btn {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.mtf-modal-btn--danger {
+  background-color: var(--color-danger);
+  color: #ffffff;
+}
+
+.mtf-modal-btn--danger:hover:not(:disabled) {
+  background-color: var(--color-danger-hover);
+}
+
+.mtf-modal-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Form fields ── */
+
+.mtf-field-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+}
+
+.mtf-input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.mtf-input::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.mtf-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.mtf-input[aria-invalid="true"] {
+  border-color: var(--color-error);
+}
+
+.mtf-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mtf-hint {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Pick lists (choose a folder / choose tests) ── */
+
+.mtf-fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.mtf-pick-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.mtf-pick-list--scroll {
+  max-height: 40vh;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.mtf-pick-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.mtf-pick-row:hover {
+  background-color: var(--color-bg);
+}
+
+.mtf-pick-row input {
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+}
+
+.mtf-pick-row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.mtf-pick-row__title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.mtf-pick-row__meta {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.mtf-pick-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.mtf-pick-toolbar__buttons {
+  display: inline-flex;
+  gap: var(--space-4);
+}
+
+.mtf-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+}
+
+.mtf-link-btn:disabled {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+/* ── Delete-folder option cards ── */
+
+.mtf-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.mtf-option:hover{
+  border-color: var(--color-primary);
+}
+
+.mtf-option input {
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+}
+
+.mtf-option--selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.mtf-option--danger.mtf-option--selected {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 1px var(--color-error);
+}
+
+.mtf-option--disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.mtf-option__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+}
+
+.mtf-option__title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+.mtf-option__desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+.mtf-option__desc strong {
+  color: var(--color-text);
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 600px) {
+  .mtf-modal-card {
+    padding: var(--space-5);
+  }
+
+  .mtf-modal-actions .btn,
+  .mtf-modal-actions .mtf-modal-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .mtf-folder-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mtf-section-bar .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
+/* Radio button CSS */
+.mtf-select-radio {
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}

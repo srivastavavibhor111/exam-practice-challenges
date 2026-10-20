@@ -1,0 +1,66 @@
+/* Shared styles for both chart cards (Performance Trend, Test Comparison) */
+
+.progress-chart-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+  transition:
+    background-color var(--transition-slow),
+    border-color var(--transition-slow);
+}
+
+.progress-chart-card__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.progress-chart-tooltip {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  box-shadow: var(--shadow-md);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  max-width: 220px;
+}
+
+.progress-chart-tooltip__title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.progress-chart-tooltip strong {
+  color: var(--color-text);
+}
+
+.progress-chart-empty {
+  text-align: center;
+  padding: var(--space-10) var(--space-6);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.progress-chart-empty__hint {
+  font-size: var(--text-xs);
+  margin-top: var(--space-2);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   APPEND THIS TO THE BOTTOM OF src/components/Progress/Charts.css
+   New: a small hint shown under the Test-by-Test chart when its x-axis
+   labels have been thinned out (too many tests to show every label).
+────────────────────────────────────────────────────────────────────────────── */
+
+.progress-chart-hint {
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle, var(--color-text-muted));
+  margin-top: var(--space-3);
+}

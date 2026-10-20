@@ -1,0 +1,26 @@
+.back-to-top-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--color-primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  transition: transform 0.15s ease;
+}
+
+.back-to-top-btn:hover {
+  transform: translateY(-1px);
+}
+
+.back-to-top-btn:active {
+  transform: translateY(0);
+}

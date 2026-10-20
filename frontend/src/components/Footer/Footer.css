@@ -1,0 +1,82 @@
+/* ─── Footer ──────────────────────────────────────────────────────────────────
+   Two-column layout: brand left, copyright right.
+   Collapses to single column on small screens.
+────────────────────────────────────────────────────────────────────────────── */
+
+.footer {
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  padding-block: var(--space-8);
+  transition:
+    background-color var(--transition-slow),
+    border-color var(--transition-slow);
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+/* Brand column */
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+}
+
+/* Coloured badge "EPC" — mirrors the Navbar logo mark */
+.footer__logo-mark {
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-primary-text);
+  background-color: var(--color-primary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  line-height: 1.5;
+  transition: background-color var(--transition-slow);
+}
+
+.footer__logo-name {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  transition: color var(--transition-slow);
+}
+
+.footer__logo:hover .footer__logo-name {
+  color: var(--color-primary);
+}
+
+.footer__tagline {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  transition: color var(--transition-slow);
+}
+
+/* Copyright */
+.footer__copy {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  transition: color var(--transition-slow);
+}
+
+/* Collapse to stacked layout on small screens */
+@media (max-width: 480px) {
+  .footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,21 @@
+/* Most styling inherited from Result.css (imported directly) — this file
+   only adds the two classes unique to this page. */
+
+.shared-result-test-id {
+  font-family: monospace;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-primary);
+  letter-spacing: 0.02em;
+}
+
+.shared-result-marks {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.shared-result-marks strong {
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+}

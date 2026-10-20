@@ -1,0 +1,749 @@
+/* ─── Result — Page Styles ────────────────────────────────────────────────────
+   Prefix: .rs-  (page level)   .rcard  (question review card)   .rcard-opt
+
+   Sections:
+     1.  Page container & top bar
+     2.  Hero (donut + summary)
+     3.  Stat grid
+     4.  Filter tabs
+     5.  Review card (.rcard)
+     6.  Option rows within review card (.rcard-opt)
+     7.  Footer actions
+     8.  Responsive
+────────────────────────────────────────────────────────────────────────────── */
+
+
+/* ── 1. Page container & top bar ──────────────────────────────────────────── */
+
+.result {
+  max-width: 820px;
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-6) var(--space-20);
+}
+
+.rs-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.rs-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  transition: color var(--transition-base);
+}
+
+.rs-back-link:hover {
+  color: var(--color-text);
+}
+
+.rs-topbar__actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+
+/* ── 2. Hero ───────────────────────────────────────────────────────────────── */
+
+.rs-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  margin-bottom: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  transition:
+    background-color var(--transition-slow),
+    border-color var(--transition-slow);
+}
+
+.rs-hero__chart-wrap {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rs-hero__chart-wrap svg circle {
+  transition: stroke var(--transition-slow);
+}
+
+.rs-hero__chart-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.rs-hero__percentage {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  line-height: 1;
+  transition: color var(--transition-slow);
+}
+
+.rs-hero__percentage-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.rs-hero__summary {
+  flex: 1;
+  min-width: 0;
+}
+
+.rs-hero__title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.rs-hero__sub {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-5);
+}
+
+.rs-hero__sub strong {
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+}
+
+.rs-hero__meta {
+  display: flex;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.rs-hero__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+}
+
+.rs-hero__meta-item svg {
+  color: var(--color-text-muted);
+}
+
+.rs-hero__meta-sub {
+  font-weight: var(--weight-normal);
+  color: var(--color-text-muted);
+}
+
+
+/* M28 Amendment */
+.rs-hero__marks {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.rs-hero__marks strong {
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+}
+
+
+/* ── 3. Stat grid ──────────────────────────────────────────────────────────── */
+
+.rs-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.rs-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top-width: 3px;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  transition:
+    background-color var(--transition-slow),
+    border-color var(--transition-slow);
+}
+
+.rs-stat-card__icon {
+  display: flex;
+  color: var(--color-text-muted);
+}
+
+.rs-stat-card__value {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.rs-stat-card__label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.rs-stat-card--correct     { border-top-color: var(--color-success, #059669); }
+.rs-stat-card--correct     .rs-stat-card__icon { color: var(--color-success, #059669); }
+
+.rs-stat-card--incorrect   { border-top-color: var(--color-error); }
+.rs-stat-card--incorrect   .rs-stat-card__icon { color: var(--color-error); }
+
+.rs-stat-card--unattempted { border-top-color: var(--color-border-strong); }
+
+.rs-stat-card--ungraded    { border-top-color: var(--color-text-subtle); }
+
+.rs-stat-card--neutral     { border-top-color: var(--color-primary); }
+.rs-stat-card--neutral     .rs-stat-card__icon { color: var(--color-primary); }
+
+
+/* ── 4. Filter tabs ────────────────────────────────────────────────────────── */
+
+.rs-review__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+
+.rs-review__title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+
+.rs-filter-tabs {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.rs-filter-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.rs-filter-tab:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.rs-filter-tab--active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-text);
+  font-weight: var(--weight-semibold);
+}
+
+.rs-filter-tab--active:hover {
+  color: var(--color-primary-text);
+}
+
+.rs-filter-tab__count {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+
+
+/* ── 5. Review card ────────────────────────────────────────────────────────── */
+
+.rs-review-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.rcard {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left-width: 3px;
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transition:
+    background-color var(--transition-slow),
+    border-color var(--transition-slow);
+}
+
+.rcard--correct     { border-left-color: var(--color-success, #059669); }
+.rcard--incorrect   { border-left-color: var(--color-error); }
+.rcard--unattempted { border-left-color: var(--color-border-strong); }
+.rcard--ungraded    { border-left-color: var(--color-text-subtle); }
+
+.rcard__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.rcard__header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.rcard__num {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted);
+}
+
+/* Status badge — icon + text, never colour alone */
+.rcard-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid;
+}
+
+.rcard-badge--correct {
+  color: var(--color-success, #059669);
+  border-color: var(--color-success, #059669);
+  background-color: rgba(5, 150, 105, 0.08);
+}
+
+.rcard-badge--incorrect {
+  color: var(--color-error);
+  border-color: var(--color-error);
+  background-color: rgba(220, 38, 38, 0.08);
+}
+
+.rcard-badge--unattempted {
+  color: var(--color-text-muted);
+  border-color: var(--color-border-strong);
+  background-color: var(--color-surface-raised);
+}
+
+.rcard-badge--ungraded {
+  color: var(--color-text-subtle);
+  border-color: var(--color-border);
+  background-color: var(--color-surface-raised);
+}
+
+[data-theme="dark"] .rcard-badge--correct   { background-color: rgba(52, 211, 153, 0.12); }
+[data-theme="dark"] .rcard-badge--incorrect { background-color: rgba(248, 113, 113, 0.12); }
+
+.rcard__marked-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-warning);
+}
+
+.rcard__text {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  line-height: var(--leading-relaxed);
+}
+
+
+/* ── 6. Option rows within review card ────────────────────────────────────── */
+
+.rcard__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.rcard-opt {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  flex-wrap: wrap;
+  transition:
+    border-color var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.rcard-opt__letter {
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted);
+  min-width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.rcard-opt__text {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  flex: 1;
+  min-width: 120px;
+}
+
+.rcard-opt__tags {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.rcard-opt__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  padding: 1px 8px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.rcard-opt__tag--user {
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text-muted);
+}
+
+.rcard-opt__tag--correct {
+  background-color: rgba(5, 150, 105, 0.10);
+  border: 1px solid var(--color-success, #059669);
+  color: var(--color-success, #059669);
+}
+
+[data-theme="dark"] .rcard-opt__tag--correct {
+  background-color: rgba(52, 211, 153, 0.12);
+}
+
+/* Correct option: green-tinted border/background */
+.rcard-opt--correct {
+  border-color: var(--color-success, #059669);
+  background-color: rgba(5, 150, 105, 0.06);
+}
+
+[data-theme="dark"] .rcard-opt--correct {
+  background-color: rgba(52, 211, 153, 0.08);
+}
+
+.rcard-opt--correct .rcard-opt__letter,
+.rcard-opt--correct .rcard-opt__text {
+  color: var(--color-success, #059669);
+  font-weight: var(--weight-medium);
+}
+
+/* User's wrong pick: red-tinted */
+.rcard-opt--wrong {
+  border-color: var(--color-error);
+  background-color: rgba(220, 38, 38, 0.06);
+}
+
+[data-theme="dark"] .rcard-opt--wrong {
+  background-color: rgba(248, 113, 113, 0.08);
+}
+
+.rcard-opt--wrong .rcard-opt__letter,
+.rcard-opt--wrong .rcard-opt__text {
+  color: var(--color-error);
+}
+
+/* Inline note (unattempted / ungraded explanation) */
+.rcard__note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+/* Explanation block */
+.rcard__explanation {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+  transition: border-color var(--transition-slow);
+}
+
+.rcard__explanation-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.rcard__explanation-text {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: var(--leading-relaxed);
+}
+
+
+/* ── Empty filter state ───────────────────────────────────────────────────── */
+
+.rs-empty-filter {
+  text-align: center;
+  padding: var(--space-10);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+
+/* ── 7. Footer actions ─────────────────────────────────────────────────────── */
+
+.rs-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border);
+  transition: border-color var(--transition-slow);
+}
+
+
+/* ── 8. Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 700px) {
+  .result {
+    padding: var(--space-6) var(--space-4) var(--space-16);
+  }
+
+  .rs-hero {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--space-6);
+  }
+
+  .rs-hero__meta {
+    justify-content: center;
+  }
+
+  .rs-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rcard {
+    padding: var(--space-5);
+  }
+
+  .rcard-opt {
+    align-items: flex-start;
+  }
+
+  .rs-footer-actions {
+    flex-direction: column-reverse;
+  }
+
+  .rs-footer-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .rs-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rs-topbar__actions {
+    width: 100%;
+  }
+
+  .rs-topbar__actions .btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .rs-stat-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   APPEND THIS BLOCK TO THE BOTTOM OF YOUR EXISTING Result.css
+   New in M13: loading and load-error states, shown while Result.jsx fetches
+   a real attempt by ID. Same visual pattern as Test.css's .tload-* classes
+   from M12 — kept prefixed with rs- to match this page's existing convention.
+────────────────────────────────────────────────────────────────────────────── */
+
+.rs-load-wrap {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-8);
+}
+
+.rs-load-spinner {
+  color: var(--color-primary);
+  display: inline-flex;
+}
+
+@keyframes rs-load-spin {
+  to { transform: rotate(360deg); }
+}
+
+.rs-load-spin {
+  animation: rs-load-spin 0.8s linear infinite;
+}
+
+.rs-load-error-icon {
+  color: var(--color-error);
+  display: inline-flex;
+  margin-bottom: var(--space-2);
+}
+
+.rs-load-title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+
+.rs-load-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  max-width: 360px;
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-2);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   APPEND THIS BLOCK TO THE BOTTOM OF YOUR EXISTING Result.css
+   New in M15: the bookmark toggle button on each review card.
+────────────────────────────────────────────────────────────────────────────── */
+
+.rcard__bookmark-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.rcard__bookmark-btn:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.rcard__bookmark-btn--active {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   APPEND THIS BLOCK TO THE BOTTOM OF YOUR EXISTING Result.css
+   New in M16: the "Generate Explanation" CTA shown on review cards that
+   don't have one yet.
+────────────────────────────────────────────────────────────────────────────── */
+
+.rcard__explain-cta {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.rcard__explain-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.rcard__explain-btn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-primary-text);
+}
+
+.rcard__explain-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.rcard__explain-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-error);
+}

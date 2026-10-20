@@ -1,0 +1,14 @@
+.recaptcha-wrap {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-2) 0;
+}
+
+.recaptcha-config-error {
+  font-size: var(--text-xs);
+  color: var(--color-error);
+  text-align: center;
+  padding: var(--space-3);
+  border: 1px dashed var(--color-error);
+  border-radius: var(--radius-md);
+}

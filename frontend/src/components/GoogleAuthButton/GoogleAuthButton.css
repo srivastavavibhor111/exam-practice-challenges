@@ -1,0 +1,10 @@
+.google-auth-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.google-auth-button--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}

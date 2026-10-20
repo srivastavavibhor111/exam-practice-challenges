@@ -1,0 +1,52 @@
+﻿
+|-- backend
+|   |-- config
+|   |-- controllers
+|   |-- middleware
+|   |-- models
+|   |-- routes
+|   |-- services
+|   |-- tests
+|   |-- utils
+|-- frontend
+|   |-- src
+|   |   |-- components
+|   |   |   |-- BackToTop
+|   |   |   |-- ExitTestDialog
+|   |   |   |-- Footer
+|   |   |   |-- GoogleAuthButton
+|   |   |   |-- Navbar
+|   |   |   |-- PageLoadingFallback
+|   |   |   |-- Progress
+|   |   |   |-- ProtectedRoute
+|   |   |   |-- QuestionOrderSelector
+|   |   |   |-- Recaptcha
+|   |   |   |-- ScreenshotPlaceholder
+|   |   |   |-- ThemeToggle
+|   |   |   |-- UserMenu
+|   |   |-- context
+|   |   |-- hooks
+|   |   |-- pages
+|   |   |   |-- Bookmarks
+|   |   |   |-- CreateTest
+|   |   |   |-- Dashboard
+|   |   |   |-- GeminiKeySetup
+|   |   |   |-- GetGeminiApiKeyGuide
+|   |   |   |-- Home
+|   |   |   |-- Login
+|   |   |   |-- Mistakes
+|   |   |   |-- MyTests
+|   |   |   |-- NotFound
+|   |   |   |-- Profile
+|   |   |   |-- Progress
+|   |   |   |-- Register
+|   |   |   |-- Result
+|   |   |   |-- Review
+|   |   |   |-- ScoringRules
+|   |   |   |-- SharedTestResult
+|   |   |   |-- SharedTests
+|   |   |   |-- SharedTestTaking
+|   |   |   |-- Test
+|   |   |-- services
+|   |   |-- styles
+|   |   |-- utils

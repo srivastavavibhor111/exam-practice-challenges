@@ -1,0 +1,250 @@
+/* ─── MyTests — Page Styles ───────────────────────────────────────────────────
+   Same visual language as Dashboard.css's test-card/delete-modal patterns,
+   prefix mytests- per this project's per-page CSS convention.
+────────────────────────────────────────────────────────────────────────────── */
+
+.mytests {
+  max-width: 960px;
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-6) var(--space-20);
+}
+
+.mytests-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.mytests-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.mytests-subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* ── Search ── */
+
+.mytests-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-6);
+  color: var(--color-text-muted);
+  transition:
+    background-color var(--transition-slow),
+    border-color var(--transition-base);
+}
+
+.mytests-search:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.mytests-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.mytests-search-input:focus {
+  outline: none;
+}
+
+.mytests-search-input::placeholder {
+  color: var(--color-text-subtle);
+}
+
+/* ── Test grid / cards ── */
+
+.mytests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-4);
+}
+
+.mytests-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  transition:
+    background-color var(--transition-slow),
+    border-color var(--transition-slow),
+    box-shadow var(--transition-base);
+}
+
+.mytests-card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.mytests-card__title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+  line-height: var(--leading-snug);
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mytests-card__meta {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.mytests-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.mytests-card__actions .btn {
+  flex: 1;
+  justify-content: center;
+}
+
+.mytests-card__delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.mytests-card__delete:hover {
+  color: var(--color-error);
+  border-color: var(--color-error);
+  background-color: rgba(220, 38, 38, 0.06);
+}
+
+[data-theme="dark"] .mytests-card__delete:hover {
+  background-color: rgba(248, 113, 113, 0.10);
+}
+
+/* ── Empty states ── */
+
+.mytests-empty {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+}
+
+.mytests-empty__title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.mytests-empty__body {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+}
+
+/* ── Loading / error states ── */
+
+.mytests-load-wrap {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-8);
+}
+
+.mytests-load-spinner {
+  color: var(--color-primary);
+  display: inline-flex;
+}
+
+@keyframes mytests-load-spin {
+  to { transform: rotate(360deg); }
+}
+
+.mytests-load-spin {
+  animation: mytests-load-spin 0.8s linear infinite;
+}
+
+.mytests-load-error-icon {
+  color: var(--color-error);
+  display: inline-flex;
+  margin-bottom: var(--space-2);
+}
+
+.mytests-load-title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+
+.mytests-load-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  max-width: 360px;
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-2);
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 600px) {
+  .mytests {
+    padding: var(--space-6) var(--space-4) var(--space-16);
+  }
+
+  .mytests-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mytests-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mytests-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── NOTE: .dmodal-* classes (the delete confirmation modal) are already
+   defined in Dashboard.css. If MyTests.css is loaded on a page where
+   Dashboard.css has never been loaded, copy the .dmodal-backdrop /
+   .dmodal-card / .dmodal-title / .dmodal-body / .dmodal-error /
+   .dmodal-actions / .btn--danger rules from Dashboard.css into this file
+   too — they're intentionally reused as-is, not redefined here, to avoid
+   two slightly-different-looking delete modals across the app. ─────────── */

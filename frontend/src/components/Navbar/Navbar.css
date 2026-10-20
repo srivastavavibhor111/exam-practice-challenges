@@ -1,0 +1,345 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--navbar-height);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  transition:
+    background-color var(--transition-slow),
+    border-color var(--transition-slow);
+}
+
+.navbar__inner {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-inline: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+/* ─── Logo ────────────────────────────────────────────────────────────── */
+
+.navbar__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.navbar__logo-mark {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-primary-text);
+  background-color: var(--color-primary);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+}
+
+.navbar__logo-text {
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* ─── Desktop-only user/login block ──────────────────────────────────── */
+
+.navbar__desktop-only {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ─── User Actions ─────────────────────────────────────────────────── */
+.navbar__user-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.navbar__user {
+  /* display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  max-width: 180px;
+  color: var(--color-text-muted);
+  font-size: 0.875rem; */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-primary);
+  
+}
+
+.navbar__profile-icon {
+  width: 36px;
+  height: 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid currentColor;
+  border-radius: 50%;
+
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.navbar__profile-icon svg {
+  display: block;
+}
+
+.navbar__user svg {
+  flex-shrink: 0;
+}
+
+
+/* ─── Desktop Nav Links ──────────────────────────────────────────────── */
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 1;
+  white-space: nowrap;
+  justify-content: center;
+}
+
+.navbar__link {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.navbar__link:hover {
+  color: var(--color-text);
+  background-color: var(--color-surface-raised);
+}
+
+.navbar__link--active {
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.navbar__link--active:hover {
+  color: var(--color-primary-hover);
+}
+
+/* ─── Actions (right side) ───────────────────────────────────────────── */
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* ─── Hamburger (mobile) ─────────────────────────────────────────────── */
+
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  flex-shrink: 0;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-base);
+  box-sizing: border-box;
+}
+
+.navbar__hamburger:hover {
+  background-color: var(--color-surface-raised);
+}
+
+.navbar__hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-text-muted);
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-base), opacity var(--transition-base);
+  transform-origin: center;
+}
+
+/* Animate to X when open */
+.navbar__hamburger--open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.navbar__hamburger--open span:nth-child(2) {
+  opacity: 0;
+}
+.navbar__hamburger--open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ─── Mobile Menu ────────────────────────────────────────────────────── */
+
+.navbar__mobile-menu {
+  display: none;
+  overflow: hidden;
+  max-height: 0;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  transition:
+    max-height var(--transition-slow),
+    background-color var(--transition-slow);
+}
+
+.navbar__mobile-menu--open {
+  /* Raised from 300px: mobile menu now also holds the user/theme row
+     and the login/logout button that used to live only on desktop. */
+  max-height: 520px;
+}
+
+.navbar__mobile-menu .navbar__username {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navbar__mobile-menu nav {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  gap: var(--space-1);
+}
+
+.navbar__mobile-link {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.navbar__mobile-link:hover {
+  color: var(--color-text);
+  background-color: var(--color-surface-raised);
+}
+
+.navbar__mobile-link--active {
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .navbar__links {
+    display: none;
+  }
+
+  .navbar__actions {
+    gap: var(--space-2);
+  }
+
+  /* Desktop-only right-side controls move into the mobile menu instead.
+     NOTE: replace `.navbar__actions > *:not(.navbar__hamburger)` below with
+     ThemeToggle's real class once confirmed — this is a safe catch-all that
+     hides every direct child of navbar__actions except the hamburger itself,
+     so it can't overflow regardless of ThemeToggle's actual markup. */
+  .navbar__actions > *:not(.navbar__hamburger) {
+    display: none;
+  }
+
+  .navbar__desktop-only {
+    display: none;
+  }
+
+  .navbar__hamburger {
+    display: flex;
+  }
+
+  .navbar__mobile-menu {
+    display: block;
+  }
+}
+
+/* ─── Mobile Menu: user + theme controls ─────────────────────────────── */
+
+.navbar__mobile-menu .navbar__mobile-user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.navbar__mobile-menu .navbar__mobile-login {
+  display: block;
+  margin: var(--space-1) var(--space-4) var(--space-2);
+  text-align: center;
+}
+
+.navbar__mobile-auth {
+  padding: 0 var(--space-4) var(--space-3);
+}
+
+
+/* CSS for username toottip */
+
+.navbar__username{
+  position: relative;
+  cursor: default;
+}
+
+.navbar__username[data-full-name]::after{
+  content: attr(data-full-name);
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+
+  padding: 8px 12px;
+  border-radius: 6px;
+
+  background: var(--color-bg);
+  color: var(--color-primary);
+
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+
+  opacity: 0;
+  visibility: 400;
+  pointer-events: none;
+
+  transition: opacity 0.15 ease, visibility 0.15s ease;
+  z-index: 1000;
+}
+
+.navbar__username[data-full-name]:hover::after{
+  opacity: 1;
+  visibility: visible;
+}

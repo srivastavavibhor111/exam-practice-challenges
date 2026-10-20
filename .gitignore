@@ -1,0 +1,24 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build output
+frontend/dist/
+
+# Private development files
+/temporary/
+
+# Large demo video (keep locally)
+screenshots/Demo Video.mp4
+
+
+# Logs
+*.log
+
+# Local database files
+*.sqlite
+*.db

@@ -1,0 +1,317 @@
+/* ─── Global Styles ──────────────────────────────────────────────────────────
+   Applies theme tokens to base elements.
+   Components build on top of these foundations.
+──────────────────────────────────────────────────────────────────────────── */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  transition: background-color var(--transition-slow), color var(--transition-slow);
+}
+
+/* ─── Typography ────────────────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+}
+
+h1 { font-size: var(--text-4xl); }
+h2 { font-size: var(--text-3xl); }
+h3 { font-size: var(--text-2xl); }
+h4 { font-size: var(--text-xl); }
+h5 { font-size: var(--text-lg); }
+h6 { font-size: var(--text-base); }
+
+p {
+  color: var(--color-text);
+  line-height: var(--leading-relaxed);
+}
+
+/* ─── Links ─────────────────────────────────────────────────────────────── */
+
+a {
+  color: var(--color-primary);
+  transition: color var(--transition-base);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+/* ─── Focus ─────────────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Selection ─────────────────────────────────────────────────────────── */
+
+::selection {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+/* ─── Scrollbar (Webkit) ─────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-subtle);
+}
+
+/* ─── Layout Utilities ──────────────────────────────────────────────────── */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.container--md {
+  max-width: var(--container-md);
+}
+
+.container--sm {
+  max-width: var(--container-sm);
+}
+
+/* ─── Page Wrapper (accounts for fixed navbar) ───────────────────────────── */
+
+.page-wrapper {
+  min-height: calc(100vh - var(--navbar-height));
+  padding-top: var(--navbar-height);
+}
+
+/* ─── Divider ────────────────────────────────────────────────────────────── */
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin-block: var(--space-6);
+}
+
+/* ─── Responsive typography ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  h1 { font-size: var(--text-3xl); }
+  h2 { font-size: var(--text-2xl); }
+  h3 { font-size: var(--text-xl); }
+
+  .container {
+    padding-inline: var(--space-4);
+  }
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────────
+   .btn           — base styles shared by all variants (works on <button> and <a>)
+   .btn--primary  — filled indigo button
+   .btn--ghost    — transparent with border  (added here for future use)
+   .btn--md       — default size (explicit class for clarity)
+   .btn--lg       — larger size used in CTA sections
+────────────────────────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    /* background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    transform var(--transition-fast); */
+    all var(--transition-base);
+}
+
+.btn--primary {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+
+  font: inherit;
+  font-weight: var(--weight-semibold);
+
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Medium button */
+.btn--md {
+  font-size: 0.875rem;
+  padding: 1rem 1.25rem;
+}
+
+/* Large button */
+.btn--lg {
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+}
+
+.btn--ghost {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+    
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.btn--ghost:hover {
+  color: var(--color-primary-text);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  color: var(--color-primary-text);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   APPEND THIS BLOCK TO THE BOTTOM OF YOUR EXISTING global.css
+   New in M17: the skip-to-content link. Visually hidden until it receives
+   keyboard focus, then appears at the top-left — standard, expected
+   behavior for this pattern (a sighted keyboard user needs to SEE it
+   appear to know it's there; a screen-reader user hears it regardless).
+────────────────────────────────────────────────────────────────────────────── */
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 8px;
+  background-color: var(--color-primary);
+  color: var(--color-primary-text);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  z-index: 1000;
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 8px;
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   APPEND THIS BLOCK TO THE BOTTOM OF YOUR EXISTING global.css
+   New in M19: global prefers-reduced-motion support, and a defensive
+   focus-visible fallback.
+────────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Reduced motion ──────────────────────────────────────────────────────
+   Before this, only ONE animation in the whole app respected
+   prefers-reduced-motion (the M5 timer's critical-state pulse). Every
+   other animation — hover lifts on buttons/cards, modal fade/slide-ins,
+   the extraction loading shimmer — ignored a user's OS-level motion
+   preference entirely. This closes that gap in one place, for everything,
+   rather than requiring a per-component fix scattered across a dozen files.
+
+   Spinners are a deliberate, explicit EXCEPTION — they're functional state
+   indicators ("this is loading"), not decoration. Stopping them dead would
+   make a loading state look identical to a frozen one. The standard,
+   WCAG-aligned approach is to slow them rather than stop them, which is
+   what the exception list below does. Add any new spinner class name
+   introduced later to this list.
+────────────────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Exception: loading spinners stay animated, just slowed down. */
+  .test-spinner,
+  .rv-spinner,
+  .rs-load-spin,
+  .dash-load-spin,
+  .bmk-load-spin,
+  .mst-load-spin,
+  .dash-insights-spin,
+  .page-loading-fallback__spinner {
+    animation-duration: 1.6s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+/* ─── Defensive focus-visible fallback ────────────────────────────────────
+   A safety net, not a replacement for the specific focus styles already
+   defined on individual components throughout the app. This guarantees
+   that no interactive element — including any that might have been missed
+   across eighteen milestones of component-specific CSS — is ever left with
+   an invisible or bare browser-default focus outline.
+────────────────────────────────────────────────────────────────────────────── */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+

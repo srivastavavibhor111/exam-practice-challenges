@@ -1,0 +1,115 @@
+/* Full page layout: header + main content + footer */
+.order-select-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg);
+}
+
+/* Main content fills the available space between header and footer */
+.order-select-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-6);
+}
+
+.order-select-card {
+  width: 100%;
+  max-width: 560px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-md);
+  transition:
+    background-color var(--transition-slow),
+    border-color var(--transition-slow);
+}
+
+.order-select-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+  text-align: center;
+}
+
+.order-select-subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-bottom: var(--space-7);
+  line-height: var(--leading-relaxed);
+}
+
+.order-select-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-7);
+}
+
+.order-select-card-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.order-select-card-item:hover {
+  border-color: var(--color-primary);
+}
+
+.order-select-card-item--active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.order-select-radio {
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.order-select-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-select-card-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+.order-select-card-desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+}
+
+.order-select-continue {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .order-select-card {
+    padding: var(--space-6) var(--space-5);
+  }
+}
+
+
+
