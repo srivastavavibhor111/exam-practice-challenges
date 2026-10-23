@@ -80,6 +80,7 @@ const ScoringRules    = lazy(() => import('./pages/ScoringRules/ScoringRules'));
 const Test       = lazy(() => import('./pages/Test/Test'));
 const Result     = lazy(() => import('./pages/Result/Result'));
 const SharedTests        = lazy(() => import('./pages/SharedTests/SharedTests'));
+const SharedTestDetails  = lazy(() => import('./pages/SharedTestDetails/SharedTestDetails'));
 const SharedTestTaking   = lazy(() => import('./pages/SharedTestTaking/SharedTestTaking'));
 const SharedTestResult   = lazy(() => import('./pages/SharedTestResult/SharedTestResult'));
 const NotFound   = lazy(() => import('./pages/NotFound/NotFound'));
@@ -147,6 +148,9 @@ function AppContent() {
             {/* ── Shared Tests — new, separate ecosystem ── */}
             <Route path="/shared-tests" element={
               <ProtectedRoute><SharedTests /></ProtectedRoute>
+            } />
+            <Route path="/shared-tests/details/:sharedTestId" element={
+              <ProtectedRoute><SharedTestDetails /></ProtectedRoute>
             } />
             <Route path="/shared-tests/take/:sharedTestId" element={
               <ProtectedRoute><SharedTestTaking /></ProtectedRoute>

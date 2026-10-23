@@ -39,6 +39,7 @@ export default function SharedTests() {
   const [loadError, setLoadError] = useState('');
 
   const [createdByMe, setCreatedByMe] = useState([]);
+  const [joined, setJoined] = useState([]);
   const [myResults, setMyResults] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [mistakes, setMistakes] = useState([]);
@@ -53,14 +54,16 @@ export default function SharedTests() {
     let cancelled = false;
     (async () => {
       try {
-        const [mine, results, bm, mis] = await Promise.all([
+        const [mine, joinedTests, results, bm, mis] = await Promise.all([
           sharedTestService.listMySharedTests(),
+          sharedTestService.listJoinedSharedTests(),
           sharedTestService.listMySharedAttempts(),
           sharedTestService.getSharedBookmarks(),
           sharedTestService.getSharedMistakes(),
         ]);
         if (cancelled) return;
         setCreatedByMe(mine);
+        setJoined(joinedTests);
         setMyResults(results);
         setBookmarks(bm);
         setMistakes(mis);
@@ -94,9 +97,16 @@ export default function SharedTests() {
     setIsJoining(true);
     try {
       const sharedTest = await sharedTestService.lookupSharedTest(trimmed);
-      // Lookup succeeded and confirmed it's active — hand off to the
-      // shared test-taking flow (reuses Test.jsx in shared mode).
-      navigate(`/shared-tests/take/${sharedTest.testId}`);
+      // The backend already refused brand-new users on an expired test
+      // (that error is shown below). If we got here:
+      //   • active  → straight into the taking flow, as before
+      //   • expired → an existing participant: open the details page first
+      //               (results + history + Reattempt), not the test itself.
+      if (sharedTest.status === 'expired') {
+        navigate(`/shared-tests/details/${sharedTest.testId}`);
+      } else {
+        navigate(`/shared-tests/take/${sharedTest.testId}`);
+      }
     } catch (err) {
       setIsJoining(false);
       setJoinError(err.message || 'Could not join this Shared Test. Please try again.');
@@ -153,7 +163,8 @@ export default function SharedTests() {
               <h2 className="shared-create-card__title">Create a Shared Test</h2>
               <p className="shared-create-card__body">
                 Build a test the same way as always — anyone with its Test ID
-                can attempt it for the next 48 hours.
+                can join it for the next 48 hours. After that, everyone who has
+                attempted it — including you — can keep reattempting it.
               </p>
             </div>
             <button className="btn btn--primary btn--lg" onClick={handleCreateClick}>
@@ -204,6 +215,35 @@ export default function SharedTests() {
             <div className="shared-created-grid">
               {createdByMe.map(t => (
                 <CreatedTestCard key={t.id} test={t} onCopy={handleCopyId} copiedId={copiedId} />
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* ── C2: Joined (tests created by others that I've attempted) ── */}
+        <section className="shared-section">
+          <h2 className="shared-section__title">Shared Tests I've Joined</h2>
+          {joined.length === 0 ? (
+            <div className="shared-empty">
+              <p className="shared-empty__title">You haven't joined anyone else's Shared Test yet.</p>
+              <p className="shared-empty__body">
+                Tests you attempt stay here, even after they expire, so you can keep practising.
+              </p>
+            </div>
+          ) : (
+            <div className="shared-results-list">
+              {joined.map(t => (
+                <Link key={t.id} to={`/shared-tests/details/${t.testId}`} className="shared-result-card">
+                  <div>
+                    <p className="shared-result-card__title">{t.title || 'Shared Test'}</p>
+                    <p className="shared-result-card__meta">
+                      {t.testId} · {t.attemptCount} {t.attemptCount === 1 ? 'attempt' : 'attempts'}
+                    </p>
+                  </div>
+                  <span className={`shared-status-badge shared-status-badge--${t.status}`}>
+                    {t.status === 'active' ? 'Active' : 'Expired'}
+                  </span>
+                </Link>
               ))}
             </div>
           )}
@@ -309,6 +349,9 @@ function CreatedTestCard({ test, onCopy, copiedId }) {
           {test.status === 'active' ? 'Active' : 'Expired'}
         </span>
       </div>
+      <Link to={`/shared-tests/details/${test.testId}`} className="btn btn--primary shared-created-card__details">
+        View details
+      </Link>
     </div>
   );
 }

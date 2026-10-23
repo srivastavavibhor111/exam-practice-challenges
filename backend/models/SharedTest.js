@@ -100,4 +100,23 @@ const sharedTestSchema = new Schema({
 
 sharedTestSchema.index({ creator: 1, createdAt: -1 });
 
+/**
+ * Permanence guard — defense in depth.
+ * A Shared Test must never be deleted through the application: not by its
+ * creator, not by expiry, not by a cascade from some other feature. There
+ * is no TTL index on this schema and no route that deletes one; these
+ * hooks make any accidental future call (Model.deleteOne, deleteMany,
+ * findOneAndDelete, doc.deleteOne) throw instead of silently removing
+ * data. Note: hooks only cover Mongoose calls — direct database access
+ * (mongosh, Atlas UI) is outside the application and unaffected.
+ */
+function blockDeletion() {
+  // Throwing (rather than calling next(err)) works on every Mongoose
+  // version; newer versions no longer pass a `next` callback to hooks.
+  throw new Error('Shared Tests are permanent and cannot be deleted.');
+}
+sharedTestSchema.pre('deleteOne', { document: true, query: true }, blockDeletion);
+sharedTestSchema.pre('deleteMany', blockDeletion);
+sharedTestSchema.pre('findOneAndDelete', blockDeletion);
+
 module.exports = mongoose.model('SharedTest', sharedTestSchema);

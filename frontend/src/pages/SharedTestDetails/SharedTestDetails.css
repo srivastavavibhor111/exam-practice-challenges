@@ -1,0 +1,119 @@
+/* SharedTestDetails — reuses shared-status-badge / shared-result-card /
+   shared-empty from SharedTests.css (imported in the .jsx so this page never
+   depends on which page loaded first). */
+.std {
+  max-width: 720px;
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-6) var(--space-20);
+}
+
+.std-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  transition: color var(--transition-base);
+  margin-bottom: var(--space-6);
+}
+.std-back:hover,
+.std-back:focus-visible { color: var(--color-text); }
+
+.std-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.std-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+  overflow-wrap: anywhere;
+}
+
+.std-id {
+  font-family: monospace;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-primary);
+  letter-spacing: 0.02em;
+}
+
+/* The expired notice carries its meaning in text, not just colour. */
+.std-notice {
+  background-color: var(--color-warning-light, var(--color-surface-raised));
+  border: 1px solid var(--color-warning, var(--color-border-strong));
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text);
+  margin-bottom: var(--space-5);
+}
+
+.std-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.std-facts > div {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+}
+.std-facts dt {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
+}
+.std-facts dd {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.std-actions { margin-bottom: var(--space-8); }
+
+.std-history__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.std-attempts {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: 0;
+  margin: 0;
+}
+
+.std-center {
+  max-width: 440px;
+  margin: var(--space-20) auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+.std-center__title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+.std-center__text {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+}

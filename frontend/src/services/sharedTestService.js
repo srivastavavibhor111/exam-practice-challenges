@@ -30,7 +30,9 @@ function normalizeSharedTest(t) {
     expiresAt: t.expiresAt,
     status: t.status, // 'active' | 'expired' — computed server-side, always trusted from there
     questions: Array.isArray(t.questions) ? t.questions.map(normalizeSharedQuestion) : [],
-    questionCount: Array.isArray(t.questions) ? t.questions.length : 0,
+    // Summary endpoints (details/joined) omit the questions array and send
+    // questionCount instead; full endpoints send questions.
+    questionCount: Array.isArray(t.questions) ? t.questions.length : (t.questionCount ?? 0),
   };
 }
 
@@ -82,6 +84,31 @@ export async function lookupSharedTest(testId) {
 export async function getSharedTestForTaking(testId) {
   const { sharedTest } = await apiRequest(`/shared-tests/${encodeURIComponent(testId)}/take`);
   return normalizeSharedTest(sharedTest);
+}
+
+/**
+ * Details page data: test metadata (no questions/answers) + the caller's own
+ * completed attempts, newest first. Throws (410) for an expired test the
+ * caller never participated in — the backend decides, not this file.
+ */
+export async function getSharedTestDetails(testId) {
+  const { sharedTest, isCreator, attempts } = await apiRequest(
+    `/shared-tests/${encodeURIComponent(testId)}/details`
+  );
+  return {
+    sharedTest: normalizeSharedTest(sharedTest),
+    isCreator: Boolean(isCreator),
+    attempts: attempts.map(normalizeSharedAttempt),
+  };
+}
+
+export async function listJoinedSharedTests() {
+  const { sharedTests } = await apiRequest('/shared-tests/joined');
+  return sharedTests.map(t => ({
+    ...normalizeSharedTest(t),
+    attemptCount: t.attemptCount || 0,
+    lastAttemptAt: t.lastAttemptAt || null,
+  }));
 }
 
 export async function startSharedAttempt(testId) {

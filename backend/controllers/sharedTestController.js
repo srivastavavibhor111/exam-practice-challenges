@@ -9,17 +9,27 @@ async function createSharedTest(req, res) {
 }
 
 async function lookupSharedTest(req, res) {
-  const sharedTest = await sharedTestService.lookupSharedTestForJoin(req.params.testId);
+  const sharedTest = await sharedTestService.lookupSharedTestForJoin(req.params.testId, req.user.id);
   res.json({ sharedTest });
 }
 
 async function getSharedTestForTaking(req, res) {
-  const sharedTest = await sharedTestService.getSharedTestForTaking(req.params.testId);
+  const sharedTest = await sharedTestService.getSharedTestForTaking(req.params.testId, req.user.id);
   res.json({ sharedTest });
 }
 
 async function listMine(req, res) {
   const sharedTests = await sharedTestService.listSharedTestsCreatedByUser(req.user.id);
+  res.json({ sharedTests });
+}
+
+async function getDetails(req, res) {
+  const details = await sharedTestService.getSharedTestDetails(req.params.testId, req.user.id);
+  res.json(details);
+}
+
+async function listJoined(req, res) {
+  const sharedTests = await sharedTestService.listJoinedSharedTests(req.user.id);
   res.json({ sharedTests });
 }
 
@@ -47,6 +57,8 @@ module.exports = {
   lookupSharedTest,
   getSharedTestForTaking,
   listMine,
+  listJoined,
+  getDetails,
   listMyBookmarks,
   listMyMistakes,
   toggleBookmark,

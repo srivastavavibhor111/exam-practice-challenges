@@ -215,7 +215,10 @@ export default function SharedTestTaking() {
           <span className="tload-error-icon" aria-hidden="true"><ErrorBigIcon /></span>
           <h1 className="tload-title">Couldn't load this Shared Test</h1>
           <p className="tload-text">{loadError}</p>
-          <Link to="/shared-tests" className="btn btn--primary">Back to Shared Tests</Link>
+          <Link to="/shared-tests" className="btn btn--primary">
+            <ArrowLeftIcon />
+            Back to Shared Tests
+          </Link>
         </div>
       </div>
     );
@@ -393,7 +396,7 @@ function ErrorIcon() {
 function ArrowRightIcon() {
   return (
     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-      <path d="M3 7.5h9M8.5 4l3.5 3.5L8.5 11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3 7.5h9M8.5 4l3.5 3.5L8.5 11" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -425,6 +428,14 @@ function MoonIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
       <path d="M13.5 10.5A6.5 6.5 0 015.5 2.5a6.5 6.5 0 100 11 6.5 6.5 0 008-3z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ArrowLeftIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }

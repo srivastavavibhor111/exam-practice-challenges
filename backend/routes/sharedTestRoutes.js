@@ -4,6 +4,7 @@ const router = express.Router();
 const sharedTestController = require('../controllers/sharedTestController');
 const asyncHandler = require('../utils/asyncHandler');
 const { validateBody } = require('../middleware/validation');
+const AppError = require('../utils/AppError');
 
 /**
  * sharedTestRoutes.js — NEW, mounted at /api/shared-tests
@@ -29,6 +30,7 @@ router.post(
 );
 
 router.get('/mine', asyncHandler(sharedTestController.listMine));
+router.get('/joined', asyncHandler(sharedTestController.listJoined));
 router.get('/bookmarks', asyncHandler(sharedTestController.listMyBookmarks));
 router.get('/mistakes', asyncHandler(sharedTestController.listMyMistakes));
 
@@ -39,6 +41,18 @@ router.get('/lookup/:testId', asyncHandler(sharedTestController.lookupSharedTest
 // Answer-stripped fetch, used right before starting — same integrity
 // principle as the personal GET /api/tests/:id/take.
 router.get('/:testId/take', asyncHandler(sharedTestController.getSharedTestForTaking));
+
+// Details for the expired/active details page: metadata + the caller's OWN
+// attempts only. Access (expired → participants only) is enforced in the service.
+router.get('/:testId/details', asyncHandler(sharedTestController.getDetails));
+
+// Shared Tests are permanent: no user, creator included, can delete one.
+// No delete route ever existed — this explicit handler makes that a stated
+// rule (a clear 405) rather than an accident of routing, and stops a future
+// careless route from quietly adding deletion.
+router.delete('/:testId', (req, res, next) => {
+  next(new AppError(405, 'Shared Tests cannot be deleted.'));
+});
 
 router.put(
   '/:sharedTestObjectId/questions/:questionId/bookmark',

@@ -218,8 +218,8 @@ export default function SharedTestResult() {
 
         <div className="rs-footer-actions">
           <Link to="/shared-tests" className="btn btn--ghost">Back to Shared Tests</Link>
-          <button className="btn btn--primary btn--lg" onClick={() => navigate(`/shared-tests/take/${attempt.sharedTestId}`)}>
-            Retake (if still active)
+          <button className="btn btn--primary btn--sm" onClick={() => navigate(`/shared-tests/details/${attempt.sharedTestId}`)}>
+            Test details &amp; reattempt
           </button>
         </div>
 
