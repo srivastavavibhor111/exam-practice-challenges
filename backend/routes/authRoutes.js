@@ -8,7 +8,12 @@ const { validateBody } = require('../middleware/validation');
 const protect = require('../middleware/auth');
 const protectPendingGoogle = require('../middleware/protectPendingGoogle');
 const verifyRecaptcha = require('../middleware/verifyRecaptcha');
-const { authLimiter } = require('../middleware/rateLimiters');
+const {
+  loginIpLimiter,
+  loginAccountLimiter,
+  registerLimiter,
+  googleFailureLimiter,
+} = require('../middleware/rateLimiters');
 
 /**
  * authRoutes.js — UPDATED
@@ -24,6 +29,17 @@ const { authLimiter } = require('../middleware/rateLimiters');
  * Everything else — /google/login, /google/register,
  * /google/complete-registration — is new.
  *
+ * RATE LIMITING (auth fix): the single shared authLimiter was replaced by
+ * separate limiters — see middleware/rateLimiters.js for the reasoning.
+ *   /register                     → registerLimiter (per IP, counts all)
+ *   /login                        → loginIpLimiter → verifyRecaptcha →
+ *                                   validateBody → loginAccountLimiter
+ *   /google/login, /google/register → googleFailureLimiter (failures only)
+ *   /google/complete-registration → registerLimiter (it creates an account)
+ * loginAccountLimiter is mounted AFTER validateBody (email is guaranteed to be
+ * a string) and after verifyRecaptcha (so a bot with no valid CAPTCHA token
+ * can't burn another person's per-account budget).
+ *
  * NOTE ON reCAPTCHA + Google routes: deliberately NOT applied to
  * /google/login or /google/register. Google's own Identity Services flow
  * already requires a real, authenticated Google account to reach this
@@ -37,7 +53,7 @@ const { authLimiter } = require('../middleware/rateLimiters');
 
 router.post(
   '/register',
-  authLimiter,
+  registerLimiter,
   verifyRecaptcha,
   validateBody({
     name:           { required: true, type: 'string', minLength: 1 },
@@ -51,13 +67,14 @@ router.post(
 
 router.post(
   '/login',
-  authLimiter,
+  loginIpLimiter,
   verifyRecaptcha,
   validateBody({
     email:          { required: true, type: 'string', minLength: 1 },
     password:       { required: true, type: 'string', minLength: 1 },
     recaptchaToken: { required: true, type: 'string', minLength: 1 },
   }),
+  loginAccountLimiter,
   asyncHandler(authController.login)
 );
 
@@ -99,7 +116,7 @@ router.delete('/account', protect, asyncHandler(authController.deleteAccount));
 
 router.post(
   '/google/login',
-  authLimiter,
+  googleFailureLimiter,
   validateBody({
     credential: { required: true, type: 'string', minLength: 1 },
   }),
@@ -108,7 +125,7 @@ router.post(
 
 router.post(
   '/google/register',
-  authLimiter,
+  googleFailureLimiter,
   validateBody({
     credential: { required: true, type: 'string', minLength: 1 },
   }),
@@ -117,7 +134,7 @@ router.post(
 
 router.post(
   '/google/complete-registration',
-  authLimiter,
+  registerLimiter,
   protectPendingGoogle,
   validateBody({
     geminiApiKey: { required: true, type: 'string', minLength: 20 },
