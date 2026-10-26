@@ -75,7 +75,12 @@ process.on('uncaughtException', (err) => {
 
 const app = express();
 
-app.set('trust proxy', 1);
+// How many reverse proxies sit in front of this app. Default 1 = Render only.
+// When the frontend proxies /api through Vercel (vercel.json rewrite), there
+// are 2 hops: set TRUST_PROXY_HOPS=2 on Render. Verify with the "key-ip" in the
+// [rate-limit] log lines — it must be the visitor's real IP, not Vercel's.
+const TRUST_PROXY_HOPS = Number.parseInt(process.env.TRUST_PROXY_HOPS, 10);
+app.set('trust proxy', Number.isInteger(TRUST_PROXY_HOPS) && TRUST_PROXY_HOPS > 0 ? TRUST_PROXY_HOPS : 1);
 
 connectDB();
 
