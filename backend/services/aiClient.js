@@ -30,14 +30,16 @@ const REQUEST_TIMEOUT_MS = 30_000;
  *   before calling. Falls back to process.env.GEMINI_API_KEY if omitted.
  * @returns {Promise<string>}
  */
-async function callAI({ system, prompt, maxTokens = 4096, jsonMode = false, temperature, apiKey }) {
+async function callAI({ system, prompt, maxTokens = 4096, jsonMode = false, temperature, apiKey, timeoutMs = REQUEST_TIMEOUT_MS }) {
+
   const key = apiKey || process.env.GEMINI_API_KEY;
   if (!key) {
     throw new Error('No Gemini API key available. Set one in your profile, or configure GEMINI_API_KEY on the server.');
   }
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
 
   try {
     const url = `${GEMINI_API_BASE}/${DEFAULT_MODEL}:generateContent`;
@@ -83,6 +85,11 @@ async function callAI({ system, prompt, maxTokens = 4096, jsonMode = false, temp
     }
     if (candidate.finishReason === 'SAFETY') {
       throw new Error('Gemini declined to respond due to its safety filters.');
+    }
+    if (candidate.finishReason === 'MAX_TOKENS' && jsonMode) {
+      const err = new Error('The AI ran out of room before finishing — that is too much content for one request. Try pasting fewer questions at a time.');
+      err.userFacing = true;
+      throw err;
     }
 
     const text = candidate.content?.parts?.[0]?.text;

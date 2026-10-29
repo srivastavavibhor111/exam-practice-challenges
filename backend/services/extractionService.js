@@ -71,7 +71,7 @@ async function runExtraction(content, meta, userId) {
     return {
       success: false,
       reason: 'extraction_failed',
-      message: err.message?.includes('API key')
+      message: (err.message?.includes('API key') || err.userFacing)
         ? err.message
         : "We couldn't confidently extract questions from this content. Please check the format and try again.",
       fallbackToPaste: meta.method === 'link',

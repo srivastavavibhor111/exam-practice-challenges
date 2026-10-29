@@ -1,6 +1,10 @@
 const { callAI } = require('./aiClient');
 const AppError = require('../utils/AppError');
 
+const EXTRACTION_MAX_OUTPUT_TOKENS = 65_536; // Gemini Flash maximum output tokens
+const EXTRACTION_TIMEOUT_MS = 180_000;       // large outputs take minutes, not seconds
+
+
 /**
  * aiExtractionService.js — UPDATED
  * extractQuestions() now accepts and threads through an apiKey param to
@@ -55,13 +59,20 @@ function normalizeQuestions(rawQuestions) {
 async function extractQuestions(rawText, apiKey) {
   const prompt = buildPrompt(rawText);
 
-  const attempt = await callAI({ system: SYSTEM_PROMPT, prompt, jsonMode: true, apiKey });
+  const attempt = await callAI({
+          system: SYSTEM_PROMPT, prompt, jsonMode: true, apiKey,
+          maxTokens: EXTRACTION_MAX_OUTPUT_TOKENS, timeoutMs: EXTRACTION_TIMEOUT_MS,
+        });
+
   const parsed = tryParse(attempt);
 
   if (parsed) return normalizeQuestions(parsed);
 
   const retryPrompt = `${prompt}\n\nYour previous response was not valid JSON. Respond with ONLY a JSON array — nothing else, not even a single word of explanation.`;
-  const retryAttempt = await callAI({ system: SYSTEM_PROMPT, prompt: retryPrompt, jsonMode: true, apiKey });
+  const retryAttempt = await callAI({
+          system: SYSTEM_PROMPT, prompt: retryPrompt, jsonMode: true, apiKey,
+          maxTokens: EXTRACTION_MAX_OUTPUT_TOKENS, timeoutMs: EXTRACTION_TIMEOUT_MS,
+        });
   const retryParsed = tryParse(retryAttempt);
 
   if (retryParsed) return normalizeQuestions(retryParsed);
