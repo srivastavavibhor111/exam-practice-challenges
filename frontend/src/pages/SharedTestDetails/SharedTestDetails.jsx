@@ -48,6 +48,11 @@ export default function SharedTestDetails() {
   const [error, setError] = useState('');
   const [details, setDetails] = useState(null);
 
+  // "Delete from my account" two-step flow
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
+
   useEffect(() => {
     let cancelled = false;
     setState('loading');
@@ -65,6 +70,18 @@ export default function SharedTestDetails() {
     })();
     return () => { cancelled = true; };
   }, [sharedTestId]);
+
+  async function handleDelete() {
+    setDeleting(true);
+    setDeleteError('');
+    try {
+      await sharedTestService.removeSharedTestFromMyAccount(sharedTestId);
+      navigate('/shared-tests');
+    } catch (err) {
+      setDeleteError(err.message || 'Could not delete this Shared Test from your account.');
+      setDeleting(false);
+    }
+  }
 
   if (state === 'loading') {
     return (
@@ -165,6 +182,54 @@ export default function SharedTestDetails() {
                 );
               })}
             </ol>
+          )}
+        </section>
+
+        <section className="std-manage" aria-labelledby="std-manage-title">
+          <h2 className="std-manage__title" id="std-manage-title">Manage this test</h2>
+
+          {!confirmingDelete ? (
+            <>
+              <p className="std-manage__text">
+                Remove this Shared Test from your account. Other people who joined it are not affected.
+              </p>
+              <button className="btn btn--ghost std-danger" onClick={() => setConfirmingDelete(true)}>
+                Delete from my account
+              </button>
+            </>
+          ) : (
+            <div className="std-confirm" role="group" aria-labelledby="std-confirm-title">
+              <p className="std-confirm__title" id="std-confirm-title">
+                ⚠ Delete this Shared Test from your account?
+              </p>
+              <ul className="std-confirm__list">
+                <li>
+                  Your {attempts.length === 1 ? '1 attempt' : `${attempts.length} attempts`} and
+                  results for this test will be permanently deleted.
+                </li>
+                <li>Your bookmarks and folder links for it will be removed.</li>
+                <li>Other people who joined this test keep it and their own results.</li>
+                {isCreator && <li>It will disappear from "Shared Tests Created by Me".</li>}
+                {isExpired && (
+                  <li>
+                    <strong>This test has expired, so you won't be able to join it again.</strong>
+                  </li>
+                )}
+              </ul>
+              {deleteError && <p className="std-confirm__error" role="alert">{deleteError}</p>}
+              <div className="std-confirm__actions">
+                <button
+                  className="btn btn--ghost"
+                  onClick={() => { setConfirmingDelete(false); setDeleteError(''); }}
+                  disabled={deleting}
+                >
+                  Cancel
+                </button>
+                <button className="btn std-danger std-danger--solid" onClick={handleDelete} disabled={deleting}>
+                  {deleting ? 'Deleting…' : 'Yes, delete from my account'}
+                </button>
+              </div>
+            </div>
           )}
         </section>
 

@@ -102,6 +102,16 @@ export async function getSharedTestDetails(testId) {
   };
 }
 
+/**
+ * "Delete from my account": removes only the caller's own attempts,
+ * bookmarks and folder links for this Shared Test (plus the creator's
+ * "Created by me" entry). The test itself and every other user's data stay.
+ * Resolves to { deletedAttempts, removedFromCreated }.
+ */
+export async function removeSharedTestFromMyAccount(testId) {
+  return apiRequest(`/shared-tests/${encodeURIComponent(testId)}/my-data`, { method: 'DELETE' });
+}
+
 export async function listJoinedSharedTests() {
   const { sharedTests } = await apiRequest('/shared-tests/joined');
   return sharedTests.map(t => ({

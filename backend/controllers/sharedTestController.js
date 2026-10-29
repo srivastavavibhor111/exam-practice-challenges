@@ -28,6 +28,11 @@ async function getDetails(req, res) {
   res.json(details);
 }
 
+async function removeFromMyAccount(req, res) {
+  const result = await sharedTestService.removeSharedTestFromMyAccount(req.params.testId, req.user.id);
+  res.json(result);
+}
+
 async function listJoined(req, res) {
   const sharedTests = await sharedTestService.listJoinedSharedTests(req.user.id);
   res.json({ sharedTests });
@@ -58,6 +63,7 @@ module.exports = {
   getSharedTestForTaking,
   listMine,
   listJoined,
+  removeFromMyAccount,
   getDetails,
   listMyBookmarks,
   listMyMistakes,

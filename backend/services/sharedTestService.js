@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { SharedTest, SharedAttempt, SharedTestBookmark } = require('../models');
+const { SharedTest, SharedAttempt, SharedTestBookmark, FolderItem } = require('../models');
 const AppError = require('../utils/AppError');
 const scoringService = require('./scoringService');
 const { generateCandidateId, isValidTestIdFormat } = require('../utils/sharedTestId');
@@ -73,7 +73,9 @@ function toPublicSharedTestSummary(sharedTestDoc) {
  * the request body, so this can't be spoofed by the client.
  */
 async function isEligibleParticipant(userId, sharedTest) {
-  if (sharedTest.creator.toString() === String(userId)) return true;
+  // A creator who removed the test from their account no longer counts as
+  // the creator for access purposes (see removeSharedTestFromMyAccount).
+  if (sharedTest.creator.toString() === String(userId) && !sharedTest.creatorRemovedAt) return true;
   const attempt = await SharedAttempt.exists({ sharedTest: sharedTest._id, user: userId });
   return Boolean(attempt);
 }
@@ -203,6 +205,12 @@ async function startSharedAttempt({ userId, testId }) {
   // Expired → only an existing participant may start a fresh attempt;
   // a new user is rejected BEFORE any attempt document is created.
   await assertCanAccess(userId, sharedTest);
+
+  // A creator who earlier removed this test from their account and is now
+  // rejoining while it is still active gets it back in "Created by me".
+  if (sharedTest.creator.toString() === String(userId) && sharedTest.creatorRemovedAt) {
+    await SharedTest.updateOne({ _id: sharedTest._id }, { $set: { creatorRemovedAt: null } });
+  }
 
   const attempt = await SharedAttempt.create({
     sharedTest: sharedTest._id,
@@ -334,8 +342,69 @@ async function listJoinedSharedTests(userId) {
     .sort((a, b) => new Date(b.lastAttemptAt || b.createdAt) - new Date(a.lastAttemptAt || a.createdAt));
 }
 
+/**
+ * removeSharedTestFromMyAccount — "Delete from my account"
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Removes ONE user's own footprint on a Shared Test and nothing else:
+ *   • all of THIS user's attempts on it        (SharedAttempt)
+ *   • all of THIS user's bookmarks on it       (SharedTestBookmark)
+ *   • THIS user's folder links to it           (FolderItem)
+ *   • if the user is the creator: the test is hidden from their "Created by
+ *     me" list and their creator-based access ends (creatorRemovedAt)
+ *
+ * The SharedTest document itself is NEVER deleted, and no other user's
+ * attempts, bookmarks, folders or access are touched — everyone else who
+ * joined keeps the test exactly as before. Every filter below includes the
+ * caller's userId, which comes from the verified token.
+ *
+ * Deliberately NOT gated by expiry: an expired test is exactly the kind a
+ * user may want to clear out. The cost to the user: on an expired test they
+ * cannot get back in afterwards (they would be a "new participant").
+ *
+ * Safe to retry if it fails part-way: each step only touches this user's
+ * leftovers.
+ */
+async function removeSharedTestFromMyAccount(testId, userId) {
+  if (!isValidTestIdFormat(testId)) {
+    throw new AppError(400, 'That doesn\'t look like a valid Test ID. Expected format: ST-XXXX-YYYY.');
+  }
+  const sharedTest = await getSharedTestByTestId(testId);
+  if (!sharedTest) {
+    throw new AppError(404, 'This Shared Test was not found in your account.');
+  }
+
+  const isActiveCreator =
+    sharedTest.creator.toString() === String(userId) && !sharedTest.creatorRemovedAt;
+  const hasAttempts = Boolean(await SharedAttempt.exists({ sharedTest: sharedTest._id, user: userId }));
+  if (!isActiveCreator && !hasAttempts) {
+    // Same answer whether the test is someone else's or already removed —
+    // never reveals whether an unrelated user's ID exists in our data.
+    throw new AppError(404, 'This Shared Test was not found in your account.');
+  }
+
+  // Creator access goes first so a failure further down can never leave the
+  // creator with a half-removed test they can still see as theirs.
+  if (isActiveCreator) {
+    await SharedTest.updateOne(
+      { _id: sharedTest._id, creator: userId },
+      { $set: { creatorRemovedAt: new Date() } }
+    );
+  }
+
+  const attemptsResult = await SharedAttempt.deleteMany({ sharedTest: sharedTest._id, user: userId });
+  await SharedTestBookmark.deleteMany({ sharedTest: sharedTest._id, user: userId });
+  await FolderItem.deleteMany({ user: userId, itemType: 'sharedTest', itemId: sharedTest._id });
+
+  return {
+    deletedAttempts: attemptsResult?.deletedCount ?? 0,
+    removedFromCreated: isActiveCreator,
+  };
+}
+
 async function listSharedTestsCreatedByUser(userId) {
-  const tests = await SharedTest.find({ creator: userId }).sort({ createdAt: -1 });
+  // `creatorRemovedAt: null` matches both "never removed" and documents
+  // created before this field existed.
+  const tests = await SharedTest.find({ creator: userId, creatorRemovedAt: null }).sort({ createdAt: -1 });
   return tests.map(toPublicSharedTest);
 }
 
@@ -461,6 +530,7 @@ module.exports = {
   submitSharedAttempt,
   getSharedAttemptById,
   getSharedTestDetails,
+  removeSharedTestFromMyAccount,
   listJoinedSharedTests,
   isEligibleParticipant,
   listSharedTestsCreatedByUser,

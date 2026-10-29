@@ -59,6 +59,16 @@ const sharedTestSchema = new Schema({
     ref: 'User',
     required: true,
   },
+
+  // Set when the CREATOR uses "Delete from my account". The test itself is
+  // never deleted (other participants keep it); this only hides it from the
+  // creator's own account and ends their creator-based access. Optional, so
+  // every existing document is simply "not removed" — no migration needed.
+  // Cleared again if the creator rejoins while the test is still active.
+  creatorRemovedAt: {
+    type: Date,
+    default: null,
+  },
   title: {
     type: String,
     required: true,

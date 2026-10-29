@@ -1,4 +1,4 @@
-/* ─── Profile — Page Styles ───────────────────────────────────────────────────
+  /* ─── Profile — Page Styles ───────────────────────────────────────────────────
    Includes its own .dmodal-* delete-confirmation styles (rather than
    assuming Dashboard.css happens to be loaded) — same visual language as
    Dashboard's delete modal, self-contained per this project's per-page

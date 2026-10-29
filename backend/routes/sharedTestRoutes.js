@@ -46,6 +46,11 @@ router.get('/:testId/take', asyncHandler(sharedTestController.getSharedTestForTa
 // attempts only. Access (expired → participants only) is enforced in the service.
 router.get('/:testId/details', asyncHandler(sharedTestController.getDetails));
 
+// "Delete from my account": removes ONLY the caller's own attempts, bookmarks,
+// folder links (and the creator's "Created by me" entry). The Shared Test
+// itself and every other user's data are untouched.
+router.delete('/:testId/my-data', asyncHandler(sharedTestController.removeFromMyAccount));
+
 // Shared Tests are permanent: no user, creator included, can delete one.
 // No delete route ever existed — this explicit handler makes that a stated
 // rule (a clear 405) rather than an accident of routing, and stops a future
